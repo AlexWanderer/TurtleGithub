@@ -1,0 +1,115 @@
+//globals::::
+$hasBreasts = true;
+$hasPigtails = true;
+string $charName = "Cinder";//used for character set name
+
+/////////Locking all Curve Channels
+select -r "*cc_*";
+select -d "*Constraint*";
+select -d "*Shape*";
+select -d "*cl_*";
+///Scales
+select -d "cc_globalMove";
+string $listSel[] = `ls -sl`;
+string $current;
+for ($current in $listSel)
+{
+setAttr -l 1 -k 0 -cb 0 ($current+".sx");
+setAttr -l 1 -k 0 -cb 0 ($current+".sy");
+setAttr -l 1 -k 0 -cb 0 ($current+".sz");
+setAttr -l 1 -k 0 -cb 0 ($current+".v");
+}
+////Rotation
+select -r cc_Lt_kneePole cc_Lt_elbowPole cc_Rt_kneePole cc_Rt_elbowPole;
+if($hasBreasts == true) { select -tgl cc_Lt_breast cc_Rt_breast;}
+string $listSel[] = `ls -sl`;
+string $current;
+for ($current in $listSel)
+{
+setAttr -l 1 -k 0 -cb 0 ($current+".rx");
+setAttr -l 1 -k 0 -cb 0 ($current+".ry");
+setAttr -l 1 -k 0 -cb 0 ($current+".rz");
+}
+//forearms: leave only rotateZ
+select -r cc_Lt_foreArm cc_Rt_foreArm;
+string $listSel[] = `ls -sl`;
+string $current;
+for ($current in $listSel)
+{
+setAttr -l 1 -k 0 -cb 0 ($current+".tx");
+setAttr -l 1 -k 0 -cb 0 ($current+".ty");
+setAttr -l 1 -k 0 -cb 0 ($current+".tz");
+setAttr -l 1 -k 0 -cb 0 ($current+".rx");
+setAttr -l 1 -k 0 -cb 0 ($current+".ry");
+setAttr -l 1 -k 0 -cb 0 ($current+".sx");
+setAttr -l 1 -k 0 -cb 0 ($current+".sy");
+setAttr -l 1 -k 0 -cb 0 ($current+".sz");
+}
+///////Create Groups for all Nodes///////
+//Create Groups
+group -em -w -n grp_charNode;
+group -em -w -n grp_globalMove;
+group -em -w -n grp_joints;
+group -em -w -n grp_iks;
+group -em -w -n grp_controlObjects;
+group -em -w -n grp_geometry;
+group -em -w -n grp_extraNodes;
+group -em -w -n grp_xtra_toShow;
+group -em -w -n grp_xtra_toHide;
+//Group Parenting
+select -r grp_joints grp_iks grp_controlObjects grp_globalMove;
+parent;
+select -r grp_xtra_toShow grp_xtra_toHide grp_extraNodes;
+parent;
+select -r grp_globalMove grp_geometry grp_extraNodes grp_charNode;
+parent;
+///////Global Move Groups
+///Joint Group
+select -r pelvis_jt grp_joints;
+parent;
+//IK Group
+select -r IkRp_Lt_leg IkRp_Rt_leg IkRP_Lt_arm IkRP_Rt_arm grp_iks;
+parent;
+////Control Curves Group
+select -r grp_Lt_foot grp_Lt_kneePole grp_Rt_foot grp_Rt_kneePole cc_pelvis cc_spine cc_chest
+grp_Lt_armIk grp_Rt_armIk grp_cc_head grp_controlObjects;
+parent;
+////////Extra Nodes
+//Extra to Show
+select -r ccRef_Lt_kneePole ccRef_Rt_kneePole ccRef_Lt_elbowPole ccRef_Rt_elbowPole grp_xtra_toShow;
+parent;
+///Extra to Hide
+select -r "cl_*"; group -n grp_clustersPole;
+select -add grp_xtra_toHide; parent;
+setAttr grp_xtra_toHide.visibility 0;
+//Global Move
+select -r cc_globalMove grp_charNode;
+parent;
+connectAttr -f cc_globalMove.translate grp_globalMove.translate;
+connectAttr -f cc_globalMove.rotate grp_globalMove.rotate;
+connectAttr -f cc_globalMove.scale grp_globalMove.scale;
+//Lock and Hide Unnecessary Group Channels
+select -r "*grp_*"; select -d grp_globalMove;//globalmove has incoming connection
+string $listSel[] = `ls -sl`;
+string $current;
+for ($current in $listSel)
+{
+    setAttr -l 1 -k 0 -cb 0 ($current+".tx");
+    setAttr -l 1 -k 0 -cb 0 ($current+".ty");
+    setAttr -l 1 -k 0 -cb 0 ($current+".tz");
+    setAttr -l 1 -k 0 -cb 0 ($current+".rx");
+    setAttr -l 1 -k 0 -cb 0 ($current+".ry");
+    setAttr -l 1 -k 0 -cb 0 ($current+".rz");
+    setAttr -l 1 -k 0 -cb 0 ($current+".sx");
+    setAttr -l 1 -k 0 -cb 0 ($current+".sy");
+    setAttr -l 1 -k 0 -cb 0 ($current+".sz");
+    //not locking visibility because maybe i want to hide a group of stuff
+}
+//Character Set
+select -r "*cc_*";
+select -d "*Constraint*";
+select -d "*Shape*";
+select -d "*cl_*";
+select -d "*grp_*";
+character -name ($charName+"_cs") -ev;//excludes visibility
+
