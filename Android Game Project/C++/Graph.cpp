@@ -45,52 +45,33 @@ int  Graph::AddNode(GraphNode node)
 
 void Graph::AddEdge(GraphEdge edge)
 {
-	//first make sure the from and to nodes exist within the graph. nextNodeIndex should be same as .size()
+	// first make sure the from and to nodes exist within the graph. nextNodeIndex should be same as .size()
 	if ((edge.from < nextNodeIndex) && (edge.to < nextNodeIndex))
 	{
-		//make sure both nodes are active before adding the edge
+		// make sure both nodes are active before adding the edge
 		if (nodes[edge.to].index != -1 && nodes[edge.from].index != -1)
 		{
-			//add the edge, first making sure it is unique
+			// add the edge, first making sure it is unique
 			if (UniqueEdge(edge.from, edge.to))
 			{
-				//we always add a from edge, but if it is not a digraph we must add the returning edge
+				// we always add a from edge, but if it is not a digraph we must add the returning edge
 				edges[edge.from].push_back(edge);
 			}
-			else
-			{
-				//System.out.println("<Graph::AddEdge>: Edge Not added! Edge already exists."); 
-			}
 
-			//if the graph is undirected we must add another connection in the opposite
-			//direction
+			// if the graph is undirected we must add another connection in the opposite
+			// direction
 			if (!isDigraph)
 			{
-				//check to make sure the edge is unique before adding
+				// check to make sure the edge is unique before adding
 				if (UniqueEdge(edge.to, edge.from))//checks the reverse edge
 				{
 					GraphEdge NewEdge;
-
-
-					NewEdge.to = edge.from;//we are assigning the reverse of the orignial edge (from and to becomes to and from)
+					NewEdge.to = edge.from; // we are assigning the reverse of the orignial edge (from and to becomes to and from)
 					NewEdge.from = edge.to;
 					edges[edge.to].push_back(NewEdge);
 				}
-				else
-				{
-					//System.out.println("<Graph::AddEdge>: Edge Not added! Edge already exists."); 
-				}
-
 			}
 		}
-		else
-		{
-			//System.out.println("<Graph::AddEdge>: Edge Not added! Inactive Node."); 
-		}
-	}
-	else
-	{
-		//System.out.println("<Graph::AddEdge>: invalid node index"); 
 	}
 }
 

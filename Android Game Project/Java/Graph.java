@@ -131,24 +131,6 @@ public class Graph
 	       
 	      return true;
 	  }
-
-	  //iterates through all the edges in the graph and removes any that point
-	  //to an invalidated node
-	  void CullInvalidEdges()
-	  {
-		  /*we're not gonna use a digraph so I wont implement this
-	      foreach (ArrayList<GraphEdge> curEdgeArrayList in edges)
-	      {
-	          for (int i = 0; i < curEdgeArrayList.size(); i++)
-	          {
-	              if (nodes[curEdgeArrayList[i].To].Index == -1 || nodes[curEdgeArrayList[i].From].Index == -1)
-	              {
-	                  curEdgeArrayList.RemoveAt(i);
-	              }
-	          }
-	      }*/
-		  System.out.println("Error in Graph::CullInvalidEdges(). You shouldn't be running this function >_>");
-	  }
 }
 
 
