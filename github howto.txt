@@ -4,6 +4,7 @@ the following to add
 git remote add origin https://github.com/turtle-master/TurtleGithub.git
 
 
+FIRST change directory to your repo (open gitbash)
 add whatever files to the folder. then type in git bash:
 
 git add .
@@ -20,3 +21,6 @@ delete any files from the folder that you dont want. then:
 git add . -A
 git commit -m 'some comment here'
 git push origin master
+
+
+turtle-master N2
