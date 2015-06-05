@@ -1,0 +1,209 @@
+<!--Data entry form which also validates correct data with JS-->
+<html>
+	<head>
+		<title>Add Name</title>
+	</head>
+	<body>
+		<form name="addname" id="addname" action="hw5_processForm.php" method="post" onsubmit="return validate();">
+			<fieldset name="addfields" id="addfields">
+				<legend>Add Member</legend>
+				EWU ID: <input type="text" name="id" id="id" size="8"><br/>
+				First Name: <input type="text" name="firstname" id="firstname" size="25"> 
+				Last Name: <input type="text" name="lastname" id="lastname" size="25"><br/>
+				Address1: <input type="text" name="addr1" id="addr1" size="40"><br/>
+				Address2: <input type="text" name="addr2" id="addr2" size="40"><br/>
+				City: <input type="text" name="city" id="city" size="25"> 
+				State: <input type="text" name="state" id="state" size="2">
+				Zip: <input type="text" name="zip" id="zip" size="10"><br/>
+				Phone: <input type="text" name="phone" id="phone" size="10"><br/>
+				Mobile: <input type="text" name="mobile" id="mobile" size="10"><br/>
+				<br/>
+				<button type="submit">Save</button>
+			</fieldset>
+		</form>
+	</body>
+</html>
+
+<script>
+$msg = "";
+function validate() 
+{	
+	var success = true;
+	$msg = "";
+	
+	success &= validateID();	
+	success &= validateFirstName(document.getElementById("firstname"));
+	success &= validateLastName(document.getElementById("lastname"));
+	success &= validateAddress();
+	success &= validateCity(document.getElementById("city"));
+	success &= validateState();
+	success &= validateZip();
+	success &= validatePhone();
+	
+	
+	console.log(success);
+	if(success != true)
+	{
+		alert("Some fields were not filled in properly.\n" + $msg);//sends a message with ok button
+		return false;
+	}
+	else 
+		return true;
+	
+}
+function validateID()
+{
+	id = document.getElementById("id");
+	id.style.backgroundColor = "white";
+	if(id == null || id.value == "" || isNaN(id.value) || id.value.toString().length != 8) 
+	{		
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "id must be an 8 digit number\n"
+		return false;
+	}	
+	return true;
+}
+function validateFirstName(id)
+{
+	id.style.backgroundColor = "white";
+	if(id == null || id.value == "" || !isNaN(id.value)) //"id" was not a valid anchor or they didn't type anything. 
+	{		
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field		
+		$msg = $msg + "First Name cannot be empty or contain a number\n"
+		return false;
+	}
+	var name = id.value;	
+	
+	var matches = name.match(/\d+/g);//checks if string has number in it
+	if (matches != null) 
+	{
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "First Name cannot contain a number\n"
+		return false;
+	}
+	id.value = nameFix(name);
+	return true;
+}
+function validateLastName(id)
+{
+	id.style.backgroundColor = "white";
+	if(id == null || id.value == "" || !isNaN(id.value)) //"id" was not a valid anchor or they didn't type anything. 
+	{		
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field		
+		$msg = $msg + "Last Name cannot be empty or contain a number\n"
+		return false;
+	}
+	var name = id.value;	
+	
+	var matches = name.match(/\d+/g);//checks if string has number in it
+	if (matches != null) 
+	{
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "Last Name cannot contain a number\n"
+		return false;
+	}
+	id.value = nameFix(name);
+	return true;
+}
+function validateAddress()
+{
+	id = document.getElementById("addr1");
+	id.style.backgroundColor = "white";
+	if(id == null || id.value == "") 
+	{		
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "Address 1 cannot be empty\n";
+		return false;
+	}
+	return true;
+}
+function validateCity(id)
+{
+	id.style.backgroundColor = "white";
+	if(id == null || id.value == "" || !isNaN(id.value)) //"id" was not a valid anchor or they didn't type anything. 
+	{		
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field		
+		$msg = $msg + "City cannot be empty or contain a number\n"
+		return false;
+	}
+	var name = id.value;	
+	
+	var matches = name.match(/\d+/g);//checks if string has number in it
+	if (matches != null) 
+	{
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "City cannot contain a number\n"
+		return false;
+	}
+	id.value = nameFix(name);
+	return true;
+}
+function validateState()
+{
+	id = document.getElementById("state");
+	id.style.backgroundColor = "white";	
+	if(id == null || id.value == "" || id.value.toString().length != 2) 
+	{		
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "State must be 2 characters (ie: WA)\n";
+		return false;
+	}	
+	var name = id.value;
+	id.value = name[0].toUpperCase() + name[1].toUpperCase();	
+	var matches = name.match(/\d+/g);//checks if string has number in it
+	if (matches != null) 
+	{
+		//console.log("didnt match");
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "State cannot contain a number\n";
+		return false;
+	}		
+	return true;
+}
+function validateZip()
+{	
+	id = document.getElementById("zip");
+	id.style.backgroundColor = "white";
+	if(id == null || id.value == "" || isNaN(id.value) || id.value.toString().length != 5) //"id" was not a valid anchor or they didn't type anything. 
+	{	
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "Zip must be 5 digit number\n"
+		return false;
+	}
+	return true;
+}
+function validatePhone()
+{
+	id = document.getElementById("phone");
+	id.style.backgroundColor = "white";
+	var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;	
+	
+	if(!id.value.match(phoneno)) 
+	{		
+		id.style.backgroundColor = "yellow";//visual clue 
+		id.focus();//puts cursor into id field
+		$msg = $msg + "Phone must be a 10 digit number\n";
+		return false;
+	}
+	var num = id.value.match(phoneno);
+	id.value = (num[1] + num[2] + num[3]);
+	return true;
+	//return false;
+}
+function nameFix(s)
+{
+    return s[0].toUpperCase() + s.slice(1);
+}
+
+</script>
