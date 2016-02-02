@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller_Scour">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Target Path">
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="dir_text" prefWidth="300.0">
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin></TextField>
+            <Button mnemonicParsing="false" onAction="#onBrowseButton" text="Browse">
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Custom Extension" />
+            <TextField fx:id="extension_text" promptText=".pdf .avi .mp3" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label />
+            <CheckBox fx:id="cb_subdir" mnemonicParsing="false" selected="true" text="Search Subdirectories" />
+            <Button mnemonicParsing="false" onAction="#onScourButton" text="Scour" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

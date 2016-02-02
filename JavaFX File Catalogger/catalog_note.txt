@@ -1,0 +1,4 @@
+This is a project In progress. The goal is to scan directories for any file type you specify
+and save information about that file to a database.
+Purpose is for people who have hundreds of thousands of files to quickly be able to 
+locate which files they have (by category, name, etc).

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <TableView fx:id="browse_table" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="c1" prefWidth="75.0" text="Filename" />
+          <TableColumn fx:id="c2" prefWidth="75.0" text="Ext" />
+            <TableColumn prefWidth="75.0" text="*cb*" />
+        </columns>
+      </TableView>
+      <FlowPane prefHeight="400.0" prefWidth="392.0">
+         <children>
+            <Label text="Database Name">
+               <FlowPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </FlowPane.margin>
+            </Label>
+            <TextField fx:id="db_name">
+               <FlowPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </FlowPane.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#onCreateButton" text="Create">
+               <FlowPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </FlowPane>
+      <Button mnemonicParsing="false" text="Back">
+         <HBox.margin>
+            <Insets top="10.0" />
+         </HBox.margin>
+      </Button>
+   </children>
+</HBox>
